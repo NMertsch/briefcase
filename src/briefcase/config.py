@@ -304,7 +304,8 @@ class GlobalConfig(BaseConfig):
         project_name,
         version,
         bundle,
-        license=None,
+        license,  # TODO: set =None again
+        license_files,  # TODO: set =None again
         url=None,
         author=None,
         author_email=None,
@@ -318,7 +319,16 @@ class GlobalConfig(BaseConfig):
         self.url = url
         self.author = author
         self.author_email = author_email
+
+        if not isinstance(license, str):
+            raise TypeError("license must be a string")
         self.license = license
+        if not isinstance(license_files, list):
+            raise TypeError("license_files must be a list of strings")
+        if not all(isinstance(license_file, str) for license_file in license_files):
+            raise TypeError("license_files must be a list of strings")
+        self.license_files = license_files
+
         self.requires_python = requires_python
 
         # Version number is PEP440 compliant:
@@ -341,6 +351,7 @@ class AppConfig(BaseConfig):
         bundle,
         description,
         license,
+        license_files,
         sources=None,
         formal_name=None,
         url=None,
@@ -388,6 +399,7 @@ class AppConfig(BaseConfig):
         self.supported = supported
         self.long_description = long_description
         self.license = license
+        self.license_files = license_files
         self.console_app = console_app
         self.requirement_installer_args = (
             [] if requirement_installer_args is None else requirement_installer_args
@@ -661,6 +673,38 @@ def parse_config(config_file, platform, output_format, console):
         raise BriefcaseConfigError("No Briefcase apps defined in pyproject.toml") from e
 
     for name, config in [("project", global_config)] + list(all_apps.items()):
+        license = config.get("license")
+        license_files = config.get("license-files")
+
+        if isinstance(license, str) and license_files:
+            # PEP 639 license metadata
+            pass
+        elif isinstance(license, dict):
+            # PEP 621 license metadata
+            if "file" in license:
+                license = "..."  # TODO: infer SPDX identifier or raise?
+                license_files = license["file"]
+                # TODO: warn about deprecated config
+            elif "text" in license:
+                license = "..."  # TODO: is it an SPDX identifier?
+                license_files = []
+                # TODO: warn about deprecated config
+            else:
+                raise BriefcaseConfigError("Invalid license metadata configuration")
+        elif isinstance(license, str):
+            # pre-PEP 621 license metadata
+            license = "..."  # TODO: infer SPDX identifier or raise?
+            license_files = []
+            # TODO: warn about deprecated config
+        elif not license and not license_files:
+            pass  # no license metadata
+        else:
+            raise BriefcaseConfigError("Invalid license metadata configuration")
+
+        if "license" in config or "license-files" in config:
+            config["license"] = license
+            config["license-files"] = license_files
+
         if isinstance(config.get("license"), str):
             section_name = "the Project" if name == "project" else f"{name!r}"
             console.warning(

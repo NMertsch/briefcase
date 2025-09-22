@@ -27,7 +27,8 @@ requires = ["briefcase"]
 project_name = "Hello World"
 bundle = "com.example"
 version = "0.0.1"
-license.file = "LICENSE"
+license = "BSD-3-Clause"
+license-files = ["LICENSE"]
 
 [tool.briefcase.app.myapp]
 description = "My first application"

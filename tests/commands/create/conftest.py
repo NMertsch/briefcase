@@ -218,7 +218,8 @@ def tracking_create_command(tmp_path, mock_git, monkeypatch_tool_host_os):
                 version="0.0.1",
                 description="The first simple app",
                 sources=["src/first"],
-                license={"file": "LICENSE"},
+                license="BSD-3-Clause",
+                license_files=["LICENSE"],
             ),
             "second": AppConfig(
                 app_name="second",
@@ -226,7 +227,8 @@ def tracking_create_command(tmp_path, mock_git, monkeypatch_tool_host_os):
                 version="0.0.2",
                 description="The second simple app",
                 sources=["src/second"],
-                license={"file": "LICENSE"},
+                license="BSD-3-Clause",
+                license_files=["LICENSE"],
             ),
         },
     )
@@ -244,7 +246,8 @@ def myapp():
         url="https://example.com",
         author="First Last",
         author_email="first@example.com",
-        license={"file": "LICENSE"},
+        license="BSD-3-Clause",
+        license_files=["LICENSE"],
     )
 
 

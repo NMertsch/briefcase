@@ -64,7 +64,8 @@ def test_single_minimal_app():
         b"""
         [tool.briefcase]
         value = 42
-        license.file = "LICENSE"
+        license = "BSD-3-Clause"
+        license-file = ["LICENSE"]
 
         [tool.briefcase.app.my_app]
         """
@@ -78,7 +79,11 @@ def test_single_minimal_app():
     )
 
     # There's a single global option
-    assert global_options == {"value": 42, "license": {"file": "LICENSE"}}
+    assert global_options == {
+        "value": 42,
+        "license": "BSD-3-Clause",
+        "license-files": ["LICENSE"],
+    }
 
     # The app gets the name from its header line.
     # It inherits the value from the base definition.
@@ -86,7 +91,8 @@ def test_single_minimal_app():
         "my_app": {
             "app_name": "my_app",
             "value": 42,
-            "license": {"file": "LICENSE"},
+            "license": "BSD-3-Clause",
+            "license-files": ["LICENSE"],
         }
     }
 
@@ -97,12 +103,14 @@ def test_multiple_minimal_apps():
         b"""
         [tool.briefcase.app.first]
         number=37
-        license.file = "LICENSE"
+        license = "BSD-3-Clause"
+        license-files = ["LICENSE"]
 
         [tool.briefcase.app.second]
         app_name="my_app"
         number=42
-        license.file = "LICENSE.txt"
+        license = "BSD-3-Clause"
+        license-files = ["LICENSE.txt"]
         """
     )
 
@@ -119,11 +127,17 @@ def test_multiple_minimal_apps():
     # The apps get their name from the header lines.
     # The second tool overrides its app name
     assert apps == {
-        "first": {"app_name": "first", "number": 37, "license": {"file": "LICENSE"}},
+        "first": {
+            "app_name": "first",
+            "number": 37,
+            "license": "BSD-3-Clause",
+            "license-files": ["LICENSE"],
+        },
         "second": {
             "app_name": "my_app",
             "number": 42,
-            "license": {"file": "LICENSE.txt"},
+            "license": "BSD-3-Clause",
+            "license-files": ["LICENSE.txt"],
         },
     }
 
@@ -135,7 +149,8 @@ def test_platform_override():
         [tool.briefcase]
         value = 0
         basevalue = "the base"
-        license.file = "LICENSE"
+        license = "BSD-3-Clause"
+        license-files = ["LICENSE"]
 
         [tool.briefcase.app.my_app]
         value = 1
@@ -166,7 +181,8 @@ def test_platform_override():
     assert global_options == {
         "value": 0,
         "basevalue": "the base",
-        "license": {"file": "LICENSE"},
+        "license": "BSD-3-Clause",
+        "license-files": ["LICENSE"],
     }
 
     # Since a macOS app has been requested, the macOS platform values
@@ -182,14 +198,16 @@ def test_platform_override():
             "basevalue": "the base",
             "appvalue": "the app",
             "platformvalue": "macos platform",
-            "license": {"file": "LICENSE"},
+            "license": "BSD-3-Clause",
+            "license-files": ["LICENSE"],
         },
         "other_app": {
             "app_name": "other_app",
             "value": 4,
             "basevalue": "the base",
             "platformvalue": "other macos platform",
-            "license": {"file": "LICENSE"},
+            "license": "BSD-3-Clause",
+            "license-files": ["LICENSE"],
         },
     }
 
@@ -201,7 +219,8 @@ def test_platform_override_ordering():
         [tool.briefcase]
         value = 0
         basevalue = "the base"
-        license.file = "LICENSE"
+        license = "BSD-3-Clause"
+        license-files = ["LICENSE"]
 
         [tool.briefcase.app.my_app]
         value = 1
@@ -232,7 +251,8 @@ def test_platform_override_ordering():
     assert global_options == {
         "value": 0,
         "basevalue": "the base",
-        "license": {"file": "LICENSE"},
+        "license": "BSD-3-Clause",
+        "license-files": ["LICENSE"],
     }
 
     # Since a macOS app has been requested, the macOS platform values
@@ -248,14 +268,16 @@ def test_platform_override_ordering():
             "basevalue": "the base",
             "appvalue": "the app",
             "platformvalue": "macos platform",
-            "license": {"file": "LICENSE"},
+            "license": "BSD-3-Clause",
+            "license-files": ["LICENSE"],
         },
         "other_app": {
             "app_name": "other_app",
             "value": 4,
             "basevalue": "the base",
             "platformvalue": "other macos platform",
-            "license": {"file": "LICENSE"},
+            "license": "BSD-3-Clause",
+            "license-files": ["LICENSE"],
         },
     }
 
@@ -267,7 +289,8 @@ def test_format_override():
         [tool.briefcase]
         value = 0
         basevalue = "the base"
-        license.file = "LICENSE"
+        license = "BSD-3-Clause"
+        license-files = ["LICENSE"]
 
         [tool.briefcase.app.my_app]
         value = 1
@@ -314,7 +337,8 @@ def test_format_override():
     assert global_options == {
         "value": 0,
         "basevalue": "the base",
-        "license": {"file": "LICENSE"},
+        "license": "BSD-3-Clause",
+        "license-files": ["LICENSE"],
     }
 
     # Since a macOS app has been requested, the macOS app format values
@@ -331,14 +355,16 @@ def test_format_override():
             "appvalue": "the app",
             "platformvalue": "macos platform",
             "formatvalue": "app format",
-            "license": {"file": "LICENSE"},
+            "license": "BSD-3-Clause",
+            "license-files": ["LICENSE"],
         },
         "other_app": {
             "app_name": "other_app",
             "value": 41,
             "basevalue": "the base",
             "formatvalue": "other macos app format",
-            "license": {"file": "LICENSE"},
+            "license": "BSD-3-Clause",
+            "license-files": ["LICENSE"],
         },
     }
 
@@ -350,7 +376,8 @@ def test_format_override_ordering():
         [tool.briefcase]
         value = 0
         basevalue = "the base"
-        license.file = "LICENSE"
+        license = "BSD-3-Clause"
+        license-files = ["LICENSE"]
 
         [tool.briefcase.app.my_app]
         value = 1
@@ -397,7 +424,8 @@ def test_format_override_ordering():
     assert global_options == {
         "value": 0,
         "basevalue": "the base",
-        "license": {"file": "LICENSE"},
+        "license": "BSD-3-Clause",
+        "license-files": ["LICENSE"],
     }
 
     # Since a macOS dmg has been requested, the macOS dmg format values
@@ -414,13 +442,15 @@ def test_format_override_ordering():
             "appvalue": "the app",
             "platformvalue": "macos platform",
             "formatvalue": "app format",
-            "license": {"file": "LICENSE"},
+            "license": "BSD-3-Clause",
+            "license-files": ["LICENSE"],
         },
         "other_app": {
             "app_name": "other_app",
             "value": 0,
             "basevalue": "the base",
-            "license": {"file": "LICENSE"},
+            "license": "BSD-3-Clause",
+            "license-files": ["LICENSE"],
         },
     }
 
@@ -432,7 +462,8 @@ def test_requires():
         [tool.briefcase]
         value = 0
         requires = ["base value"]
-        license.file = "LICENSE"
+        license = "BSD-3-Clause"
+        license-files = ["LICENSE"]
 
         [tool.briefcase.app.my_app]
         requires = ["my_app value"]
@@ -468,7 +499,8 @@ def test_requires():
     assert global_options == {
         "value": 0,
         "requires": ["base value"],
-        "license": {"file": "LICENSE"},
+        "license": "BSD-3-Clause",
+        "license-files": ["LICENSE"],
     }
 
     # The macOS my_app app specifies a full inherited chain.
@@ -483,7 +515,8 @@ def test_requires():
                 "app value",
             ],
             "value": 0,
-            "license": {"file": "LICENSE"},
+            "license": "BSD-3-Clause",
+            "license-files": ["LICENSE"],
         },
         "other_app": {
             "app_name": "other_app",
@@ -491,7 +524,8 @@ def test_requires():
                 "base value",
             ],
             "value": 0,
-            "license": {"file": "LICENSE"},
+            "license": "BSD-3-Clause",
+            "license-files": ["LICENSE"],
         },
     }
 
@@ -508,7 +542,8 @@ def test_requires():
     assert global_options == {
         "value": 0,
         "requires": ["base value"],
-        "license": {"file": "LICENSE"},
+        "license": "BSD-3-Clause",
+        "license-files": ["LICENSE"],
     }
 
     # The macOS my_app dmg specifies a full inherited chain.
@@ -523,7 +558,8 @@ def test_requires():
                 "xcode value",
             ],
             "value": 0,
-            "license": {"file": "LICENSE"},
+            "license": "BSD-3-Clause",
+            "license-files": ["LICENSE"],
         },
         "other_app": {
             "app_name": "other_app",
@@ -531,7 +567,8 @@ def test_requires():
                 "base value",
             ],
             "value": 0,
-            "license": {"file": "LICENSE"},
+            "license": "BSD-3-Clause",
+            "license-files": ["LICENSE"],
         },
     }
 
@@ -547,7 +584,8 @@ def test_requires():
     assert global_options == {
         "value": 0,
         "requires": ["base value"],
-        "license": {"file": "LICENSE"},
+        "license": "BSD-3-Clause",
+        "license-files": ["LICENSE"],
     }
 
     # The linux my_app appimage overrides the *base* value, but extends for linux.
@@ -561,7 +599,8 @@ def test_requires():
                 "appimage value",
             ],
             "value": 0,
-            "license": {"file": "LICENSE"},
+            "license": "BSD-3-Clause",
+            "license-files": ["LICENSE"],
         },
         "other_app": {
             "app_name": "other_app",
@@ -569,7 +608,8 @@ def test_requires():
                 "base value",
             ],
             "value": 0,
-            "license": {"file": "LICENSE"},
+            "license": "BSD-3-Clause",
+            "license-files": ["LICENSE"],
         },
     }
 
@@ -580,7 +620,8 @@ def test_document_types():
         b"""
         [tool.briefcase]
         value = 0
-        license.file = "LICENSE"
+        license = "BSD-3-Clause"
+        license-files = ["LICENSE"]
 
         [tool.briefcase.app.my_app]
 
@@ -623,12 +664,14 @@ def test_document_types():
                 },
             },
             "value": 0,
-            "license": {"file": "LICENSE"},
+            "license": "BSD-3-Clause",
+            "license-files": ["LICENSE"],
         },
         "other_app": {
             "app_name": "other_app",
             "value": 0,
-            "license": {"file": "LICENSE"},
+            "license": "BSD-3-Clause",
+            "license-files": ["LICENSE"],
         },
     }
 
@@ -686,7 +729,9 @@ def test_pep621_defaults():
         "project_name": "Awesome app",
         "bundle": "com.example",
         "version": "1.2.3",
-        "license": {"text": "You can use it while standing on one foot"},
+        "license": {
+            "text": "You can use it while standing on one foot"
+        },  # TODO: this is invalid
         "author": "Kim Park",
         "author_email": "kim@example.com",
         "url": "https://example.com/awesome",
@@ -721,13 +766,15 @@ def test_license_is_string_project():
 
     assert global_options == {
         "value": 0,
-        "license": {"file": "LICENSE"},
+        "license": "BSD-3-Clause",
+        "license-files": ["LICENSE"],
     }
     assert apps["my_app"] == {
         "app_name": "my_app",
         "value": 0,
         "appvalue": "the app",
-        "license": {"file": "LICENSE"},
+        "license": "BSD-3-Clause",
+        "license-files": ["LICENSE"],
     }
     console.warning.assert_called_once_with(
         """
@@ -778,13 +825,15 @@ def test_license_is_string_project_and_app():
 
     assert global_options == {
         "value": 0,
-        "license": {"file": "LICENSE"},
+        "license": "BSD-3-Clause",
+        "license-files": ["LICENSE"],
     }
     assert apps["my_app"] == {
         "app_name": "my_app",
         "value": 0,
         "appvalue": "the app",
-        "license": {"file": "LICENSE"},
+        "license": "BSD-3-Clause",
+        "license-files": ["LICENSE"],
     }
     console.warning.assert_has_calls(
         [

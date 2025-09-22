@@ -12,7 +12,8 @@ def test_no_resources(create_command):
         version="1.2.3",
         description="This is a simple app",
         sources=["src/my_app"],
-        license={"file": "LICENSE"},
+        license="BSD-3-Clause",
+        license_files=["LICENSE"],
     )
 
     # Prime the path index with no targets
@@ -38,7 +39,8 @@ def test_icon_target(create_command, tmp_path):
         description="This is a simple app",
         sources=["src/my_app"],
         icon="images/icon",
-        license={"file": "LICENSE"},
+        license="BSD-3-Clause",
+        license_files=["LICENSE"],
     )
 
     # Prime the path index with 2 icon targets
@@ -108,7 +110,8 @@ def test_icon_variant_target(create_command, tmp_path):
             "round": "images/round",
             "square": "images/square",
         },
-        license={"file": "LICENSE"},
+        license="BSD-3-Clause",
+        license_files=["LICENSE"],
     )
 
     # Prime the path index with 2 icon targets
@@ -193,7 +196,8 @@ def test_splash_target(create_command, capsys):
         description="This is a simple app",
         sources=["src/my_app"],
         splash="images/splash",
-        license={"file": "LICENSE"},
+        license="BSD-3-Clause",
+        license_files=["LICENSE"],
     )
 
     # Prime an empty path index
@@ -225,7 +229,8 @@ def test_splash_variant_target(create_command, capsys):
             "portrait": "images/portrait",
             "landscape": "images/landscape",
         },
-        license={"file": "LICENSE"},
+        license="BSD-3-Clause",
+        license_files=["LICENSE"],
     )
 
     # Prime an empty path index
@@ -267,7 +272,8 @@ def test_doctype_icon_target(create_command, tmp_path):
                 "extension": "other",
             },
         },
-        license={"file": "LICENSE"},
+        license="BSD-3-Clause",
+        license_files=["LICENSE"],
     )
 
     # Prime the path index with 2 document types;

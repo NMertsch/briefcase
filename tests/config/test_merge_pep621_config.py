@@ -20,7 +20,8 @@ def test_base_keys():
             "description": "It's cool",
             "version": "1.2.3",
             "urls": {"Homepage": "https://example.com"},
-            "license": {"text": "BSD License"},
+            "license": "BSD-3-Clause",
+            "license-files": ["LICENSE"],
             "requires-python": ">=3.9",
         },
     )
@@ -29,7 +30,8 @@ def test_base_keys():
         "key": "value",
         "description": "It's cool",
         "version": "1.2.3",
-        "license": {"text": "BSD License"},
+        "license": "BSD-3-Clause",
+        "license-files": ["LICENSE"],
         "url": "https://example.com",
         "requires_python": ">=3.9",
     }
@@ -42,7 +44,8 @@ def test_base_keys_override():
         "description": "Good code I promise",
         "version": "2.3.4",
         "url": "https://beeware.org",
-        "license": "BSD License",
+        "license": "BSD-3-Clause",
+        "license-files": ["LICENSE"],
     }
 
     merge_pep621_config(
@@ -51,7 +54,8 @@ def test_base_keys_override():
             "description": "It's cool",
             "version": "1.2.3",
             "urls": {"Homepage": "https://example.com"},
-            "license": {"text": "GPL3"},
+            "license": "GPLv3",
+            "license-files": ["LICENSE"],
         },
     )
 
@@ -59,7 +63,8 @@ def test_base_keys_override():
         "key": "value",
         "description": "Good code I promise",
         "version": "2.3.4",
-        "license": "BSD License",
+        "license": "BSD-3-Clause",
+        "license-files": ["LICENSE"],
         "url": "https://beeware.org",
     }
 

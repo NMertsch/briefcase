@@ -123,5 +123,6 @@ def my_app():
         version="1.2.3",
         description="This is a simple app",
         sources=["src/my_app"],
-        license={"file": "LICENSE"},
+        license="BSD-3-Clause",
+        license_files=["LICENSE"],
     )

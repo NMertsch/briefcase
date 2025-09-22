@@ -10,7 +10,8 @@ def test_minimal_GlobalConfig():
         project_name="My Project",
         version="1.2.3",
         bundle="org.beeware",
-        license={"file": "LICENSE"},
+        license="BSD-3-Clause",
+        license_files=["LICENSE"],
     )
 
     # The basic properties have been set.
@@ -32,7 +33,8 @@ def test_extra_attrs():
         author_email="jane@example.com",
         first="value 1",
         second=42,
-        license={"file": "LICENSE"},
+        license="BSD-3-Clause",
+        license_files=["LICENSE"],
     )
 
     # The basic properties have been set.
@@ -58,7 +60,8 @@ def test_valid_app_version():
             project_name="My Project",
             version="1.2.3",
             bundle="org.beeware",
-            license={"file": "LICENSE"},
+            license="BSD-3-Clause",
+            license_files=["LICENSE"],
         )
     except BriefcaseConfigError:
         pytest.fail("1.2.3 should be a valid version number")
@@ -72,5 +75,6 @@ def test_invalid_app_version():
             project_name="My Project",
             version="foobar",
             bundle="org.beeware",
-            license={"file": "LICENSE"},
+            license="BSD-3-Clause",
+            license_files=["LICENSE"],
         )

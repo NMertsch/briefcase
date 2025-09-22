@@ -14,7 +14,8 @@ def first_app():
         version="0.0.1",
         description="The first simple app",
         sources=["src/first"],
-        license={"file": "LICENSE"},
+        license="BSD-3-Clause",
+        license_files=["LICENSE"],
     )
 
 
@@ -26,7 +27,8 @@ def second_app():
         version="0.0.2",
         description="The second simple app",
         sources=["src/second"],
-        license={"file": "LICENSE"},
+        license="BSD-3-Clause",
+        license_files=["LICENSE"],
     )
 
 
